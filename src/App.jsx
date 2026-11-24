@@ -178,7 +178,7 @@ function App({ pageType = 'home', project = null } = {}) {
         <Hero reducedMotion={reducedMotion} />
         <About />
         <Skills />
-        <Projects reducedMotion={reducedMotion} theme={theme} />
+        <Projects reducedMotion={reducedMotion} />
         <Experience />
         <Contact reducedMotion={reducedMotion} />
         <Footer reducedMotion={reducedMotion} />

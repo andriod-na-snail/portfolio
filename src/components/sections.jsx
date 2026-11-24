@@ -4,7 +4,6 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { content } from '../data/content.js'
 import { BrandMark } from './BrandMark.jsx'
 import { HeroLanyard } from './HeroLanyard.jsx'
-import GridMotion from './backgrounds/GridMotion'
 
 function KineticTitle({ children, className = '' }) {
   const words = String(children).split(' ')
@@ -159,15 +158,7 @@ export function ProjectArtwork({ project }) {
   )
 }
 
-const projectMotionItems = content.projects.map((project) => (
-  <div className={`project-motion-tile project-motion-tile--${project.theme}`} key={project.slug}>
-    <span className="project-motion-index">{project.number} / CONCEPT</span>
-    <strong>{project.title}</strong>
-    <small>{project.category}</small>
-  </div>
-))
-
-export function Projects({ reducedMotion, theme }) {
+export function Projects({ reducedMotion }) {
   const [activeIndex, setActiveIndex] = useState(0)
   const viewportRef = useRef(null)
   const trackRef = useRef(null)
@@ -215,26 +206,6 @@ export function Projects({ reducedMotion, theme }) {
     <section id="projects" className="projects section section-anchor" aria-labelledby="projects-title">
       <div className="container">
         <SectionHead index={content.copy.projects.index} eyebrow={content.copy.projects.eyebrow} title={content.copy.projects.title} note={content.copy.projects.note} />
-      </div>
-      <div className="project-motion-wall container" aria-hidden="true">
-        <GridMotion
-          items={projectMotionItems}
-          rows={3}
-          aspectRatio={1.22}
-          gap={12}
-          radius={3}
-          angle={-8}
-          speed={reducedMotion ? 0 : 14}
-          direction="alternate"
-          parallax={reducedMotion ? 0 : 0.24}
-          spotlight={reducedMotion ? 0 : 0.5}
-          dim={reducedMotion ? 0.12 : 0.7}
-          grayscale={!reducedMotion}
-          fade={0.34}
-          theme={theme}
-          className="project-motion-canvas"
-        />
-        <div className="project-motion-caption"><span>SELECTED WORK / 01—05</span><strong>Systems with a point of view.</strong></div>
       </div>
       <div className="project-carousel container">
         <div ref={viewportRef} className="project-track-viewport" role="group" aria-roledescription="carousel" aria-label={content.copy.projects.carouselLabel} tabIndex={0} onKeyDown={handleKeyDown} onPointerDown={handlePointerDown} onPointerUp={handlePointerUp} onPointerCancel={() => { pointerStartRef.current = null }}>
