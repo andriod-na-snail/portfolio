@@ -10,9 +10,9 @@ const SECTION_COLORS = {
   hero: { dark: '#ff593d', light: '#bd3b24' },
   about: { dark: '#e28a61', light: '#a94c31' },
   skills: { dark: '#d77758', light: '#a64a30' },
-  projects: { dark: '#ff6848', light: '#b43c25' },
+  projects: { dark: '#74bdae', light: '#3f8177' },
   experience: { dark: '#e4a35d', light: '#a4562c' },
-  contact: { dark: '#ff593d', light: '#bd3b24' },
+  contact: { dark: '#82aeca', light: '#496f8c' },
   'project-detail-hero': { dark: '#ff6848', light: '#b43c25' },
   'project-detail-overview': { dark: '#e4a35d', light: '#a4562c' }
 }
@@ -36,7 +36,9 @@ export function GlobalBackdrop({ theme, reducedMotion }) {
   const glowRef = useRef(null)
   const [activeSection, setActiveSection] = useState('hero')
   const color = SECTION_COLORS[activeSection]?.[theme] || SECTION_COLORS.hero[theme]
-  const colors = theme === 'light' ? [color, '#c57955'] : [color, '#f4eee7']
+  const colors = ['projects', 'contact'].includes(activeSection)
+    ? [color, theme === 'light' ? '#e9f1f0' : '#dce9ed']
+    : theme === 'light' ? [color, '#c57955'] : [color, '#f4eee7']
   const position = SECTION_POSITIONS[activeSection] || SECTION_POSITIONS.hero
 
   useLayoutEffect(() => {

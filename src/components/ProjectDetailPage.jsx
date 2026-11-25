@@ -25,11 +25,13 @@ export function ProjectDetailPage({ project }) {
   const index = content.projects.findIndex((entry) => entry.slug === project.slug)
   const previousProject = content.projects[(index - 1 + content.projects.length) % content.projects.length]
   const nextProject = content.projects[(index + 1) % content.projects.length]
+  const liveUrl = project.live && !project.live.includes('example.com') ? project.live : null
+  const sourceUrl = project.github && !/^https:\/\/github\.com\/?$/.test(project.github) ? project.github : null
 
   return (
     <main className="project-detail-page" aria-labelledby="project-detail-title">
       <div className="container project-detail-container">
-        <a className="project-back-link" href="/#projects"><Arrow direction="left" /> {detailCopy.backToProjects}</a>
+        <a className="project-back-link" href="/projects/"><Arrow direction="left" /> {detailCopy.backToProjects}</a>
         <section className="project-detail-hero">
           <div className="project-detail-copy">
             <span className="project-detail-kicker">{detailCopy.eyebrow}</span>
@@ -37,10 +39,10 @@ export function ProjectDetailPage({ project }) {
             <h1 id="project-detail-title">{project.title}</h1>
             <p className="project-detail-summary">{project.description}</p>
             <div className="project-placeholder-badge">{detailCopy.placeholderBadge}</div>
-            <div className="project-detail-actions">
-              <a className="button button--primary" href={project.live} target="_blank" rel="noreferrer">{content.copy.projects.liveLink} <Arrow /></a>
-              <a className="button button--outline" href={project.github} target="_blank" rel="noreferrer">{content.copy.projects.githubLink} <Arrow /></a>
-            </div>
+            {(liveUrl || sourceUrl) ? <div className="project-detail-actions">
+              {liveUrl && <a className="button button--primary" href={liveUrl} target="_blank" rel="noreferrer">{content.copy.projects.liveLink} <Arrow /></a>}
+              {sourceUrl && <a className="button button--outline" href={sourceUrl} target="_blank" rel="noreferrer">{content.copy.projects.githubLink} <Arrow /></a>}
+            </div> : <p className="project-no-demo">Independent concept study · No live demo or public repository.</p>}
           </div>
           <div className="project-detail-art" aria-hidden="true">
             <ProjectArtwork project={project} />
@@ -71,7 +73,7 @@ export function ProjectDetailPage({ project }) {
             <span className="project-pager-label"><Arrow direction="left" /> {detailCopy.previous}</span>
             <span className="project-pager-title">{previousProject.title}</span>
           </a>
-          <a className="project-pager-all" href="/#projects">{detailCopy.backToProjects}</a>
+          <a className="project-pager-all" href="/projects/">{detailCopy.backToProjects}</a>
           <a className="project-pager-next" href={`/projects/${nextProject.slug}/`}>
             <span className="project-pager-label">{detailCopy.next} <Arrow /></span>
             <span className="project-pager-title">{nextProject.title}</span>

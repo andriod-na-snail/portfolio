@@ -174,7 +174,7 @@ function App({ pageType = 'home', project = null } = {}) {
         <CustomCursor reducedMotion={reducedMotion} />
         <Navigation theme={theme} onToggleTheme={toggleTheme} projectMode />
         <main className={`standalone-route standalone-route--${pageType}`}>
-          {pageType === 'projects' ? <ProjectsDirectory /> : <Contact reducedMotion={reducedMotion} />}
+          {pageType === 'projects' ? <ProjectsDirectory /> : <Contact reducedMotion={reducedMotion} standalone />}
         </main>
         <Footer reducedMotion={reducedMotion} />
       </>

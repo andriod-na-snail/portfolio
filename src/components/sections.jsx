@@ -100,8 +100,8 @@ export function About() {
         </div>
         <div className="stats-row" aria-label="Portfolio statistics">
           {content.stats.map((stat, index) => (
-            <div className="stat" key={stat.label} data-reveal data-count={stat.value} data-delay={index * 100}>
-              <strong><span className="stat-number">0</span><span>{stat.suffix}</span></strong>
+            <div className="stat" key={stat.label} data-reveal data-delay={index * 100}>
+              <strong>{stat.value}</strong>
               <span className="stat-label">{stat.label}</span>
             </div>
           ))}
@@ -161,6 +161,13 @@ export function ProjectArtwork({ project }) {
 export function ProjectsDirectory() {
   const categories = ['ALL', ...new Set(content.projects.map((project) => project.category))]
   const [activeCategory, setActiveCategory] = useState('ALL')
+  const designFocus = {
+    'daily-ritual': 'Explore how customer ordering and staff-facing daily tasks could share one clear service flow.',
+    'open-road': 'Make the path from browsing vehicles to requesting a reservation easier to follow.',
+    counterpoint: 'Bring core checkout steps and staff data views into one practical workflow.',
+    'recall-club': 'Make review sessions feel manageable with short practice and visible progress.',
+    'maison-noire': 'Help shoppers understand the product and the path to purchase through a focused storefront.'
+  }
   const visibleProjects = activeCategory === 'ALL'
     ? content.projects
     : content.projects.filter((project) => project.category === activeCategory)
@@ -191,15 +198,21 @@ export function ProjectsDirectory() {
           </div>
         </div>
 
+        <aside className="project-directory__trust" aria-label="About the work shown">
+          <span className="micro-label">ABOUT THESE PROJECTS</span>
+          <p>These are independent concept studies, not commissioned client work. I don’t claim business results or metrics that haven’t been measured. They show how I approach common product and workflow challenges.</p>
+        </aside>
+
         <div className="project-directory__grid">
           {visibleProjects.map((project) => (
             <article className="project-directory-card" key={project.slug} aria-labelledby={`project-${project.slug}-title`}>
               <a className="project-directory-card__art-link" href={`/projects/${project.slug}/`} tabIndex={-1} aria-hidden="true"><ProjectArtwork project={project} /></a>
               <div className="project-directory-card__body">
-                <div className="project-directory-card__meta"><span>{project.category}</span><span>{project.number} / {String(content.projects.length).padStart(2, '0')}</span></div>
+                <div className="project-directory-card__meta"><span>{project.category} · CONCEPT</span><span>{project.number} / {String(content.projects.length).padStart(2, '0')}</span></div>
                 <h2 id={`project-${project.slug}-title`}>{project.title}</h2>
                 <p className="project-directory-card__role">{project.role}</p>
                 <p className="project-directory-card__description">{project.description}</p>
+                <div className="project-directory-card__focus"><span className="micro-label">DESIGN FOCUS</span><p>{designFocus[project.slug]}</p></div>
                 <div className="project-directory-card__stack" aria-label={`Technology: ${project.stack.join(', ')}`}>
                   {project.stack.map((tool) => <span key={tool}>{(content.technologyIcons[tool] ?? []).map((icon) => <i className={`devicon-${icon} colored`} aria-hidden="true" key={icon} />)}{tool}</span>)}
                 </div>
@@ -209,9 +222,18 @@ export function ProjectsDirectory() {
           ))}
         </div>
 
+        <div className="project-workflow" aria-labelledby="project-workflow-title">
+          <div className="project-workflow__heading"><span className="micro-label">A CLEAR WAY TO WORK</span><h2 id="project-workflow-title">Good work starts with shared expectations.</h2></div>
+          <div className="project-workflow__steps">
+            <article><span>01 / UNDERSTAND</span><h3>Start with the real need.</h3><p>Get clear on the people, workflow, constraints, and the problem worth solving.</p></article>
+            <article><span>02 / AGREE</span><h3>Define scope before build.</h3><p>Align on deliverables, priorities, timeline, and how progress will be reviewed.</p></article>
+            <article><span>03 / DELIVER</span><h3>Build for the handoff.</h3><p>Keep the interface responsive and the implementation understandable for whoever maintains it next.</p></article>
+          </div>
+        </div>
+
         <div className="project-directory__closing">
-          <div><span className="micro-label">HAVE A GOOD IDEA?</span><p>Let’s make the next one together.</p></div>
-          <a className="button button--primary" href="/contact/">Start a conversation <ArrowUpRight /></a>
+          <div><span className="micro-label">HAVE A BUSINESS CHALLENGE?</span><p>Let’s work out the right next step.</p></div>
+          <a className="button button--primary" href="/contact/">Discuss your project <ArrowUpRight /></a>
         </div>
       </div>
     </section>
@@ -272,6 +294,8 @@ export function Projects({ reducedMotion }) {
           <div id="project-track" ref={trackRef} className="project-track" style={{ width: `${projectCount * 100}%` }}>
             {content.projects.map((project, index) => {
               const slideSize = `${100 / projectCount}%`
+              const liveUrl = project.live && !project.live.includes('example.com') ? project.live : null
+              const sourceUrl = project.github && !/^https:\/\/github\.com\/?$/.test(project.github) ? project.github : null
               return <article className="project-card" key={project.number} data-reveal role="group" aria-roledescription="slide" aria-label={`${index + 1} of ${projectCount}: ${project.title}`} aria-hidden={index !== activeIndex} inert={index !== activeIndex} style={{ width: slideSize, flexBasis: slideSize }}>
                 <ProjectArtwork project={project} />
                 <div className="project-card__meta"><span>{project.category}</span><span>{project.number} / {String(projectCount).padStart(2, '0')}</span></div>
@@ -280,10 +304,11 @@ export function Projects({ reducedMotion }) {
                 <p className="project-description">{project.description}</p>
                 <div className="project-stack">{project.stack.map((tag) => <span className="project-stack__item" key={tag}>{(content.technologyIcons[tag] ?? []).map((icon) => <i className={`devicon-${icon} colored`} aria-hidden="true" key={icon} />)}{tag}</span>)}</div>
                 <div className="project-links">
-                  <a href={project.live} target="_blank" rel="noreferrer">{content.copy.projects.liveLink} <ArrowUpRight /></a>
-                  <a href={project.github} target="_blank" rel="noreferrer">{content.copy.projects.githubLink} <ArrowUpRight /></a>
+                  {liveUrl && <a href={liveUrl} target="_blank" rel="noreferrer">{content.copy.projects.liveLink} <ArrowUpRight /></a>}
+                  {sourceUrl && <a href={sourceUrl} target="_blank" rel="noreferrer">{content.copy.projects.githubLink} <ArrowUpRight /></a>}
+                  {!liveUrl && !sourceUrl && <span className="project-links__note">INDEPENDENT CONCEPT · NO PUBLIC DEMO</span>}
                 </div>
-                <a className="project-detail-cta" href={`/projects/${project.slug}`}>{content.copy.projects.viewDetails} <ArrowUpRight /></a>
+                <a className="project-detail-cta" href={`/projects/${project.slug}/`}>{content.copy.projects.viewDetails} <ArrowUpRight /></a>
               </article>
             })}
           </div>
@@ -328,7 +353,7 @@ export function Experience() {
   )
 }
 
-export function Contact({ reducedMotion }) {
+export function Contact({ reducedMotion, standalone = false }) {
   const [status, setStatus] = useState('idle')
   const [draft, setDraft] = useState(null)
   const [copyState, setCopyState] = useState('idle')
@@ -411,6 +436,7 @@ export function Contact({ reducedMotion }) {
   const draftHref = draft
     ? `mailto:${content.email}?subject=${encodeURIComponent(draftSubject)}&body=${encodeURIComponent(draftBody)}`
     : `mailto:${content.email}`
+  const ContactTitle = standalone ? 'h1' : 'h2'
 
   return (
     <section ref={sectionRef} id="contact" className="contact section section-anchor" aria-labelledby="contact-title">
@@ -418,12 +444,17 @@ export function Contact({ reducedMotion }) {
       <div className="container">
         <div className="contact-prelude"><span className="section-index">{content.copy.contact.index}</span><span className="eyebrow">{content.copy.contact.eyebrow}</span><span className="contact-rule" /></div>
         <div className="contact-heading-row">
-          <h2 id="contact-title" className="contact-title" data-kinetic><KineticTitle>{content.copy.contact.titleFirst}</KineticTitle><br /><KineticTitle className="contact-title__accent">{content.copy.contact.titleSecond}</KineticTitle></h2>
+          <ContactTitle id="contact-title" className="contact-title" data-kinetic><KineticTitle>{content.copy.contact.titleFirst}</KineticTitle><br /><KineticTitle className="contact-title__accent">{content.copy.contact.titleSecond}</KineticTitle></ContactTitle>
           <div className="contact-stamp" aria-hidden="true"><BrandMark /><span>PORTFOLIO / 001<br />PHT · UTC+8</span></div>
         </div>
         <div className="contact-intro">
           <p className="contact-intro__copy">{content.copy.contact.prompt}</p>
           <div className="contact-focus"><span className="micro-label">{content.copy.contact.workFocusLabel}</span><div>{content.copy.contact.workFocus.map((focus) => <span key={focus}>{focus}</span>)}</div></div>
+        </div>
+        <div className="contact-engagement" aria-label="What to expect">
+          <article><span>01 / START</span><h3>Understand the need.</h3><p>We clarify the people, problem, and constraints before choosing a solution.</p></article>
+          <article><span>02 / ALIGN</span><h3>Agree on scope.</h3><p>Deliverables, priorities, and timing are discussed before work begins.</p></article>
+          <article><span>03 / BUILD</span><h3>Keep it transparent.</h3><p>You’ll know what is being built, what remains, and what needs a decision.</p></article>
         </div>
         <div className="contact-layout">
           <div className="contact-info">

@@ -13,11 +13,12 @@ export async function generateMetadata({ params }) {
   const project = content.projects.find((entry) => entry.slug === slug)
   if (!project) return { title: `Project not found — ${content.name}` }
 
-  const description = `${project.description} Concept project sample page from ${content.name}'s portfolio.`
+  const description = `${project.description} Independent concept study by ${content.name}; not a commissioned client case study.`
   return {
     title: `${project.title} — ${content.name}`,
     description,
-    openGraph: { title: `${project.title} — ${content.name}`, description, type: 'article' },
+    alternates: { canonical: `/projects/${slug}/` },
+    openGraph: { title: `${project.title} — ${content.name}`, description, type: 'article', url: `/projects/${slug}/`, images: [{ url: '/og-cover.svg', alt: `${project.title} concept study by ${content.name}` }] },
     twitter: { card: 'summary_large_image', title: `${project.title} — ${content.name}`, description }
   }
 }
