@@ -68,8 +68,8 @@ export function Hero({ reducedMotion }) {
           </div>
           <p className="hero-tagline" data-reveal>{content.tagline}</p>
           <div className="hero-actions" data-reveal>
-            <a className="button button--primary" data-magnetic href="#projects">{content.copy.hero.viewWork} <ArrowUpRight /></a>
-            <a className="button button--outline" data-magnetic href="#contact">{content.copy.hero.contact} <ArrowUpRight /></a>
+            <a className="button button--primary" data-magnetic href="/projects">{content.copy.hero.viewWork} <ArrowUpRight /></a>
+            <a className="button button--outline" data-magnetic href="/contact">{content.copy.hero.contact} <ArrowUpRight /></a>
           </div>
         </div>
       </div>
@@ -155,6 +155,66 @@ export function ProjectArtwork({ project }) {
       </div>
       <span className="art-annotation">{content.copy.projects.designStudy}</span>
     </div>
+  )
+}
+
+export function ProjectsDirectory() {
+  const categories = ['ALL', ...new Set(content.projects.map((project) => project.category))]
+  const [activeCategory, setActiveCategory] = useState('ALL')
+  const visibleProjects = activeCategory === 'ALL'
+    ? content.projects
+    : content.projects.filter((project) => project.category === activeCategory)
+
+  return (
+    <section id="projects" className="project-directory section section-anchor" aria-labelledby="project-directory-title">
+      <div className="container">
+        <div className="project-directory__heading">
+          <div className="section-head__meta">
+            <span className="section-index">{content.copy.projects.index}</span>
+            <span className="eyebrow">{content.copy.projects.eyebrow}</span>
+          </div>
+          <div className="project-directory__title-row">
+            <h1 id="project-directory-title" className="project-directory__title">Selected<br />work<span>.</span></h1>
+            <p className="project-directory__intro">A closer look at digital concepts shaped around useful systems, clear interfaces, and thoughtful details.</p>
+          </div>
+          <div className="project-directory__toolbar">
+            <div className="project-directory__filters" role="group" aria-label="Filter projects by category">
+              {categories.map((category) => (
+                <button className="project-directory__filter" type="button" key={category} aria-pressed={activeCategory === category} onClick={() => setActiveCategory(category)}>
+                  {category === 'ALL' ? 'All work' : category}
+                </button>
+              ))}
+            </div>
+            <span className="project-directory__count" role="status" aria-live="polite">
+              {String(visibleProjects.length).padStart(2, '0')} / {String(content.projects.length).padStart(2, '0')} PROJECTS
+            </span>
+          </div>
+        </div>
+
+        <div className="project-directory__grid">
+          {visibleProjects.map((project) => (
+            <article className="project-directory-card" key={project.slug} aria-labelledby={`project-${project.slug}-title`}>
+              <a className="project-directory-card__art-link" href={`/projects/${project.slug}`} tabIndex={-1} aria-hidden="true"><ProjectArtwork project={project} /></a>
+              <div className="project-directory-card__body">
+                <div className="project-directory-card__meta"><span>{project.category}</span><span>{project.number} / {String(content.projects.length).padStart(2, '0')}</span></div>
+                <h2 id={`project-${project.slug}-title`}>{project.title}</h2>
+                <p className="project-directory-card__role">{project.role}</p>
+                <p className="project-directory-card__description">{project.description}</p>
+                <div className="project-directory-card__stack" aria-label={`Technology: ${project.stack.join(', ')}`}>
+                  {project.stack.map((tool) => <span key={tool}>{(content.technologyIcons[tool] ?? []).map((icon) => <i className={`devicon-${icon} colored`} aria-hidden="true" key={icon} />)}{tool}</span>)}
+                </div>
+                <a className="project-directory-card__link" href={`/projects/${project.slug}`}>{content.copy.projects.viewDetails} <ArrowUpRight /></a>
+              </div>
+            </article>
+          ))}
+        </div>
+
+        <div className="project-directory__closing">
+          <div><span className="micro-label">HAVE A GOOD IDEA?</span><p>Let’s make the next one together.</p></div>
+          <a className="button button--primary" href="/contact">Start a conversation <ArrowUpRight /></a>
+        </div>
+      </div>
+    </section>
   )
 }
 

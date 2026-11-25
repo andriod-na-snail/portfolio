@@ -214,7 +214,7 @@ export function Footer({ reducedMotion }) {
   return (
     <footer className="site-footer">
       <div className="container footer-main">
-        <a className="footer-brand" href="#hero" aria-label="Back to top, Joshua Bacay"><BrandMark /><i>↗</i></a>
+        <a className="footer-brand" href="/#hero" aria-label="Back to portfolio start, Joshua Bacay"><BrandMark /><i>↗</i></a>
         <p>{content.footerCredit}<br /><span>{content.copy.footer.credit}</span></p>
         <Clock />
         <button className="back-to-top" type="button" onClick={toTop}>{content.copy.footer.backToTop} <ArrowUp /></button>

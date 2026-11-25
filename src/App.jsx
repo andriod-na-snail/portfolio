@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useState } from 'react'
 import { animate, stagger } from 'animejs'
 import { countUp, drawSvgPath, useMagnetic, useReducedMotion, useReveal } from './animations/useMotion.js'
-import { About, Contact, Experience, Hero, Projects, Skills } from './components/sections.jsx'
+import { About, Contact, Experience, Hero, Projects, ProjectsDirectory, Skills } from './components/sections.jsx'
 import { CustomCursor, Footer, IntroLoader, Navigation, TimelineRail } from './components/chrome.jsx'
 import { ProjectDetailPage } from './components/ProjectDetailPage.jsx'
 import { GlobalBackdrop } from './components/backgrounds/GlobalBackdrop.jsx'
@@ -156,12 +156,26 @@ function App({ pageType = 'home', project = null } = {}) {
   useProjectTilt(ready && !reducedMotion)
 
   if (!isHomePage) {
+    if (pageType === 'project') {
+      return (
+        <>
+          <GlobalBackdrop theme={theme} reducedMotion={reducedMotion} />
+          <CustomCursor reducedMotion={reducedMotion} />
+          <Navigation theme={theme} onToggleTheme={toggleTheme} projectMode />
+          <ProjectDetailPage project={project} />
+          <Footer reducedMotion={reducedMotion} />
+        </>
+      )
+    }
+
     return (
       <>
         <GlobalBackdrop theme={theme} reducedMotion={reducedMotion} />
         <CustomCursor reducedMotion={reducedMotion} />
         <Navigation theme={theme} onToggleTheme={toggleTheme} projectMode />
-        <ProjectDetailPage project={project} />
+        <main className={`standalone-route standalone-route--${pageType}`}>
+          {pageType === 'projects' ? <ProjectsDirectory /> : <Contact reducedMotion={reducedMotion} />}
+        </main>
         <Footer reducedMotion={reducedMotion} />
       </>
     )

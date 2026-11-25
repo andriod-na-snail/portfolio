@@ -1,1 +1,1 @@
-{"routes":[{"path":"/","title":"Joshua Bacay — Software Engineer"},{"path":"/projects/:slug","title":"Project detail — Joshua Bacay"}]}
+{"routes":[{"path":"/","title":"Joshua Bacay — Software Engineer"},{"path":"/projects","title":"Selected work | Joshua Bacay"},{"path":"/contact","title":"Contact | Joshua Bacay"},{"path":"/projects/:slug","title":"Project detail — Joshua Bacay"}]}
