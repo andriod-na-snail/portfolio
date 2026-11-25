@@ -67,12 +67,12 @@ export function ProjectDetailPage({ project }) {
         </section>
 
         <nav className="project-detail-pager" aria-label={detailCopy.projectPagesLabel}>
-          <a href={`/projects/${previousProject.slug}`}>
+          <a href={`/projects/${previousProject.slug}/`}>
             <span className="project-pager-label"><Arrow direction="left" /> {detailCopy.previous}</span>
             <span className="project-pager-title">{previousProject.title}</span>
           </a>
           <a className="project-pager-all" href="/#projects">{detailCopy.backToProjects}</a>
-          <a className="project-pager-next" href={`/projects/${nextProject.slug}`}>
+          <a className="project-pager-next" href={`/projects/${nextProject.slug}/`}>
             <span className="project-pager-label">{detailCopy.next} <Arrow /></span>
             <span className="project-pager-title">{nextProject.title}</span>
           </a>

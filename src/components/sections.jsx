@@ -68,8 +68,8 @@ export function Hero({ reducedMotion }) {
           </div>
           <p className="hero-tagline" data-reveal>{content.tagline}</p>
           <div className="hero-actions" data-reveal>
-            <a className="button button--primary" data-magnetic href="/projects">{content.copy.hero.viewWork} <ArrowUpRight /></a>
-            <a className="button button--outline" data-magnetic href="/contact">{content.copy.hero.contact} <ArrowUpRight /></a>
+            <a className="button button--primary" data-magnetic href="/projects/">{content.copy.hero.viewWork} <ArrowUpRight /></a>
+            <a className="button button--outline" data-magnetic href="/contact/">{content.copy.hero.contact} <ArrowUpRight /></a>
           </div>
         </div>
       </div>
@@ -194,7 +194,7 @@ export function ProjectsDirectory() {
         <div className="project-directory__grid">
           {visibleProjects.map((project) => (
             <article className="project-directory-card" key={project.slug} aria-labelledby={`project-${project.slug}-title`}>
-              <a className="project-directory-card__art-link" href={`/projects/${project.slug}`} tabIndex={-1} aria-hidden="true"><ProjectArtwork project={project} /></a>
+              <a className="project-directory-card__art-link" href={`/projects/${project.slug}/`} tabIndex={-1} aria-hidden="true"><ProjectArtwork project={project} /></a>
               <div className="project-directory-card__body">
                 <div className="project-directory-card__meta"><span>{project.category}</span><span>{project.number} / {String(content.projects.length).padStart(2, '0')}</span></div>
                 <h2 id={`project-${project.slug}-title`}>{project.title}</h2>
@@ -203,7 +203,7 @@ export function ProjectsDirectory() {
                 <div className="project-directory-card__stack" aria-label={`Technology: ${project.stack.join(', ')}`}>
                   {project.stack.map((tool) => <span key={tool}>{(content.technologyIcons[tool] ?? []).map((icon) => <i className={`devicon-${icon} colored`} aria-hidden="true" key={icon} />)}{tool}</span>)}
                 </div>
-                <a className="project-directory-card__link" href={`/projects/${project.slug}`}>{content.copy.projects.viewDetails} <ArrowUpRight /></a>
+                <a className="project-directory-card__link" href={`/projects/${project.slug}/`}>{content.copy.projects.viewDetails} <ArrowUpRight /></a>
               </div>
             </article>
           ))}
@@ -211,7 +211,7 @@ export function ProjectsDirectory() {
 
         <div className="project-directory__closing">
           <div><span className="micro-label">HAVE A GOOD IDEA?</span><p>Let’s make the next one together.</p></div>
-          <a className="button button--primary" href="/contact">Start a conversation <ArrowUpRight /></a>
+          <a className="button button--primary" href="/contact/">Start a conversation <ArrowUpRight /></a>
         </div>
       </div>
     </section>

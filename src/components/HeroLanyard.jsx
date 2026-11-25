@@ -2,7 +2,7 @@ import { lazy, Suspense } from 'react'
 import { content } from '../data/content.js'
 
 const Lanyard = lazy(() => import('./Lanyard.tsx'))
-const portraitImage = '/manus-storage/me_7fa84047.png'
+const portraitImage = '/images/joshua-portrait.png'
 const escapeXml = (value) => String(value).replace(/[&<>"']/g, (char) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&apos;' })[char])
 const badgeInitials = content.name.split(/\s+/).map((part) => part[0] ?? '').join('').slice(0, 2).toUpperCase()
 

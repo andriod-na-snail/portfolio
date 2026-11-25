@@ -6,8 +6,8 @@ const description = 'Explore selected product and interface concepts by Joshua B
 export const metadata = {
   title,
   description,
-  alternates: { canonical: '/projects' },
-  openGraph: { type: 'website', url: '/projects', title, description, images: [{ url: '/og-cover.svg', alt: 'Selected work by Joshua Bacay' }] },
+  alternates: { canonical: '/projects/' },
+  openGraph: { type: 'website', url: '/projects/', title, description, images: [{ url: '/og-cover.svg', alt: 'Selected work by Joshua Bacay' }] },
   twitter: { card: 'summary_large_image', title, description, images: ['/og-cover.svg'] }
 }
 

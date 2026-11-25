@@ -6,8 +6,8 @@ const description = 'Contact Joshua Bacay about software engineering, web system
 export const metadata = {
   title,
   description,
-  alternates: { canonical: '/contact' },
-  openGraph: { type: 'website', url: '/contact', title, description, images: [{ url: '/og-cover.svg', alt: 'Contact Joshua Bacay' }] },
+  alternates: { canonical: '/contact/' },
+  openGraph: { type: 'website', url: '/contact/', title, description, images: [{ url: '/og-cover.svg', alt: 'Contact Joshua Bacay' }] },
   twitter: { card: 'summary_large_image', title, description, images: ['/og-cover.svg'] }
 }
 
